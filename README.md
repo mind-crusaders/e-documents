@@ -1,4 +1,4 @@
-# Secure Passport application
+# Project Description
 
 This application allow people to securely upload and store all identity related documents which can include passport, drivers licence, birth certificate, and many more. Our platform will allow users to securely send relevant documnets to government services whenever they require certain services.The following are some of the features of the application. More special and unique features will be added as the development of the application continues;
 
@@ -7,7 +7,7 @@ This application allow people to securely upload and store all identity related 
 3. Users will be able to keep  track of who is accessing their documents.
 
 
-# LegacyInc API
+# Documents API
 
 API to store and retrieve confidential development files (configuration, credentials)
 
