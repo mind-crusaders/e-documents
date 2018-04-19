@@ -7,7 +7,7 @@ This application allow people to securely upload and store all identity related 
 3. Users will be able to keep  track of who is accessing their documents.
 
 
-# Passport API
+# Documents API
 
 API to store and retrieve confidential development files (configuration, credentials)
 
