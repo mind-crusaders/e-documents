@@ -3,7 +3,7 @@
 require 'json'
 require 'sequel'
 
-module PassportApi
+module EDocuments
   # Models a secret document
   class Document < Sequel::Model
     many_to_one :project

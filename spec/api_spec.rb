@@ -6,15 +6,15 @@ require 'rack/test'
 require 'yaml'
 
 require_relative '../app'
-require_relative '../models/document'
+require_relative '../document'
 
 def app
-  Credence::Api
+  EDocuments::Api
 end
 
 DATA = YAML.safe_load File.read('db/seeds/document_seeds.yml')
 
-describe 'Test Credence Web API' do
+describe 'Test EDocuments Web API' do
   include Rack::Test::Methods
 
   before do
@@ -28,8 +28,8 @@ describe 'Test Credence Web API' do
 
   describe 'Handle documents' do
     it 'HAPPY: should be able to get list of all documents' do
-      Credence::Document.new(DATA[0]).save
-      Credence::Document.new(DATA[1]).save
+      EDocuments::Document.new(DATA[0]).save
+      EDocuments::Document.new(DATA[1]).save
 
       get 'api/v1/documents'
       result = JSON.parse last_response.body
@@ -37,7 +37,7 @@ describe 'Test Credence Web API' do
     end
 
     it 'HAPPY: should be able to get details of a single document' do
-      Credence::Document.new(DATA[1]).save
+      EDocuments::Document.new(DATA[1]).save
       id = Dir.glob('db/*.txt').first.split(%r{[/\.]})[1]
 
       get "/api/v1/documents/#{id}"

@@ -5,8 +5,8 @@ require 'base64'
 
 require_relative 'user_dir/user_info'
  
-module PassportApi
-  # Web controller for Credence API
+module EDocuments
+  # Web controller for EDocuments API
   class Api < Roda
     plugin :environments
     plugin :halt
@@ -19,26 +19,26 @@ module PassportApi
       response['Content-Type'] = 'application/json'
 
       routing.root do
-        { message: 'The Api is running   at /passportAppApi' }.to_json
+        { message: 'The Api is running   at /EDocuments' }.to_json
       end
 
-      routing.on 'passportApi' do
+      routing.on 'EDocuments' do
         routing.on 'user_dir' do
           
-            # POST passportApi/user_dir/[ID]
+            # POST eDocuments/user_dir/[ID]
             routing.get String do |id|
               User.find(id).to_json
             rescue StandardError
               routing.halt 404, { message: 'User not found' }.to_json
             end
 
-            # GET passportApi/user_dir
+            # GET EDocuments/user_dir
             routing.get do
               output = { document_ids: User.all }
               JSON.pretty_generate(output)
             end
 
-            # POST passportApi/user_dir
+            # POST EDocuments/user_dir
             routing.post do
               new_data = JSON.parse(routing.body.read)
               new_user = User.new(new_data)

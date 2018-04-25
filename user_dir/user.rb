@@ -4,7 +4,7 @@ require 'json'
 require 'base64'
 require 'rbnacl/libsodium'
 
-module PassportApi
+module EDocuments
   # Holds a full secret users
   class User
     STORE_DIR = 'db/'
