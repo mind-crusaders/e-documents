@@ -6,7 +6,7 @@ require 'sequel'
 module EDocuments
   # Models a secret document
   class Document < Sequel::Model
-    many_to_one :project
+    many_to_one :user
 
     # rubocop:disable MethodLength
     def to_json(options = {})

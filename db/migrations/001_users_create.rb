@@ -9,7 +9,6 @@ Sequel.migration do
 
       String :name, null: false
       String :surname, null: false
-      String :surname, null: false
       String :username, null: false
       String :email, null: false
       Integer :phone, null: false

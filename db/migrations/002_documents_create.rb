@@ -8,7 +8,7 @@ Sequel.migration do
       primary_key :id
       foreign_key :user_id, table: :users
 
-      String :id, null: false
+      #String :id, null: false
       String :filename, null: false
       String :relative_path, null: false, default: ''
       String :description

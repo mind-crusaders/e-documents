@@ -20,7 +20,7 @@ module EDocuments
               name: name,
               surname: surname,
               email: email,
-              phone: phone,
+              phone: phone
             }
           }
         }, options

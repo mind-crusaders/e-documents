@@ -34,7 +34,7 @@ namespace :db do
   require 'sequel'
 
   Sequel.extension :migration
-  app = eDocuments::Api
+  app = EDocuments::Api
 
   desc 'Run migrations'
   task :migrate => :print_env do
