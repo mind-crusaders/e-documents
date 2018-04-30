@@ -19,11 +19,11 @@ module EDocuments
               filename: filename,
               relative_path: relative_path,
               description: description,
-              content: content
+              permission: permission,
             }
           },
           included: {
-            project: project
+            user: user
           }
         }, options
       )
@@ -31,3 +31,6 @@ module EDocuments
     # rubocop:enable MethodLength
   end
 end
+
+
+

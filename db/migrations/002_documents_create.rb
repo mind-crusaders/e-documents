@@ -8,13 +8,16 @@ Sequel.migration do
       primary_key :id
       foreign_key :user_id, table: :users
 
+      String :id, null: false
       String :filename, null: false
       String :relative_path, null: false, default: ''
       String :description
-      String :content, null: false, default: ''
-
+      String :permission, null: false  
+      
+      
       DateTime :created_at
       DateTime :updated_at
+      DateTime :expire_at
 
       unique [:user_id, :relative_path, :filename]
     end

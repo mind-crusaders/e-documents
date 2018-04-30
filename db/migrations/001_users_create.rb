@@ -9,9 +9,14 @@ Sequel.migration do
 
       String :name, null: false
       String :surname, null: false
+      String :surname, null: false
       String :username, null: false
       String :email, null: false
       Integer :phone, null: false
+
+
+      DateTime :created_at
+      DateTime :updated_at
     end
   end
 end
