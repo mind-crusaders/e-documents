@@ -2,30 +2,30 @@
 
 require_relative './spec_helper'
 
-describe 'Test Project Handling' do
+describe 'Test user Handling' do
   include Rack::Test::Methods
 
   before do
     wipe_database
   end
 
-  it 'HAPPY: should be able to get list of all projects' do
-    EDocuments::Project.create(DATA[:projects][0]).save
-    EDocuments::Project.create(DATA[:projects][1]).save
+  it 'HAPPY: should be able to get list of all users' do
+    EDocuments::User.create(DATA[:users][0]).save
+    EDocuments::User.create(DATA[:users][1]).save
 
-    get 'api/v1/projects'
+    get 'api/v1/users'
     _(last_response.status).must_equal 200
 
     result = JSON.parse last_response.body
     _(result['data'].count).must_equal 2
   end
 
-  it 'HAPPY: should be able to get details of a single project' do
-    existing_proj = DATA[:projects][1]
-    EDocuments::Project.create(existing_proj).save
-    id = EDocuments::Project.first.id
+  it 'HAPPY: should be able to get details of a single user' do
+    existing_proj = DATA[:users][1]
+    EDocuments::User.create(existing_proj).save
+    id = EDocuments::User.first.id
 
-    get "/api/v1/projects/#{id}"
+    get "/api/v1/users/#{id}"
     _(last_response.status).must_equal 200
 
     result = JSON.parse last_response.body
@@ -33,25 +33,30 @@ describe 'Test Project Handling' do
     _(result['data']['attributes']['name']).must_equal existing_proj['name']
   end
 
-  it 'SAD: should return error if unknown project requested' do
-    get '/api/v1/projects/foobar'
+  it 'SAD: should return error if unknown user requested' do
+    get '/api/v1/users/foobar'
 
     _(last_response.status).must_equal 404
   end
 
-  it 'HAPPY: should be able to create new projects' do
-    existing_proj = DATA[:projects][1]
+  it 'HAPPY: should be able to create new users' do
+    existing_proj = DATA[:users][1]
 
     req_header = { 'CONTENT_TYPE' => 'application/json' }
-    post 'api/v1/projects', existing_proj.to_json, req_header
+    post 'api/v1/users', existing_proj.to_json, req_header
     _(last_response.status).must_equal 201
     _(last_response.header['Location'].size).must_be :>, 0
 
     created = JSON.parse(last_response.body)['data']['data']['attributes']
-    proj = EDocuments::Project.first
+    proj = EDocuments::User.first
 
     _(created['id']).must_equal proj.id
-    _(created['name']).must_equal existing_proj['name']
-    _(created['repo_url']).must_equal existing_proj['repo_url']
+    _(created['surname']).must_equal existing_user['surname']
+    _(created['username']).must_equal existing_user['username']
+    _(created['email']).must_equal existing_user['email']
+    _(created['phone']).must_equal existing_user['phone']
   end
 end
+
+
+
