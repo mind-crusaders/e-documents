@@ -1,26 +1,38 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '2.5.0'
 
-gem 'econfig'
+# Web API
+gem 'roda'
 gem 'puma'
-gem 'rack-flash3'
-gem 'rack-ssl-enforcer'
-gem 'sinatra'
-gem 'slim'
+gem 'json'
 
+# Configuration
+gem 'econfig'
 gem 'rake'
-gem 'tux'
+gem 'pry'
 
-gem 'http'
+# Security
+gem 'rbnacl-libsodium'
 
+# Database
+gem 'sequel'
+gem 'hirb'
+group :development, :test do
+  gem 'sqlite3'
+end
+
+# Testing
 group :test do
   gem 'minitest'
   gem 'minitest-rg'
-  gem 'webmock'
+  gem 'rack-test'
 end
 
+# Development
 group :development do
+  gem 'rubocop'
+end
+
+group :development, :test do
   gem 'rerun'
 end
