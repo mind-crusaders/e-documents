@@ -11,7 +11,7 @@ module EDocuments
     plugin :uuid, field: :id
     plugin :timestamps
     plugin :whitelist_security
-    #We allow users to set everything but permission
+    #We allow accounts to set everything but permission
     set_allowed_columns :filename, :relative_path, :description
 
     def description
