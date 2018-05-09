@@ -9,11 +9,11 @@ describe 'Test user Handling' do
     wipe_database
   end
 
-  it 'HAPPY: should be able to get list of all users' do
-    EDocuments::User.create(DATA[:users][0]).save
-    EDocuments::User.create(DATA[:users][1]).save
+  it 'HAPPY: should be able to get list of all accounts' do
+    EDocuments::User.create(DATA[:accounts][0]).save
+    EDocuments::User.create(DATA[:accounts][1]).save
 
-    get 'api/v1/users'
+    get 'api/v1/accounts'
     _(last_response.status).must_equal 200
 
     result = JSON.parse last_response.body
@@ -21,11 +21,11 @@ describe 'Test user Handling' do
   end
 
   it 'HAPPY: should be able to get details of a single user' do
-    existing_proj = DATA[:users][1]
+    existing_proj = DATA[:accounts][1]
     EDocuments::User.create(existing_proj).save
     id = EDocuments::User.first.id
 
-    get "/api/v1/users/#{id}"
+    get "/api/v1/accounts/#{id}"
     _(last_response.status).must_equal 200
 
     result = JSON.parse last_response.body
@@ -34,22 +34,22 @@ describe 'Test user Handling' do
   end
 
   it 'SAD: should return error if unknown user requested' do
-    get '/api/v1/users/foobar'
+    get '/api/v1/accounts/foobar'
 
     _(last_response.status).must_equal 404
   end
 
-  describe 'Creating New Users' do
+  describe 'Creating New accounts' do
     before do
       @req_header = { 'CONTENT_TYPE' => 'application/json' }
-      @proj_data = DATA[:users][1]
+      @proj_data = DATA[:accounts][1]
     end
     
-    it 'HAPPY: should be able to create new users' do
-      existing_proj = DATA[:users][1]
+    it 'HAPPY: should be able to create new accounts' do
+      existing_proj = DATA[:accounts][1]
   
       req_header = { 'CONTENT_TYPE' => 'application/json' }
-      post 'api/v1/users', existing_proj.to_json, req_header
+      post 'api/v1/accounts', existing_proj.to_json, req_header
       _(last_response.status).must_equal 201
       _(last_response.header['Location'].size).must_be :>, 0
   
@@ -65,7 +65,7 @@ describe 'Test user Handling' do
     it 'BAD: should not create project with illegal attributes' do
       bad_data = @proj_data.clone
       bad_data['created_at'] = '1900-01-01'
-      post 'api/v1/users', bad_data.to_json, @req_header
+      post 'api/v1/accounts', bad_data.to_json, @req_header
   
       _(last_response.status).must_equal 400
       _(last_response.header['Location']).must_be_nil

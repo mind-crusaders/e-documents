@@ -1,0 +1,8 @@
+---
+- name: Muzi
+  surname: Gondwe
+  username: muzi.gondwe
+  email: phiwokuhlegondwe@gmail.com
+  phone: +26876124637
+  password: mypassword
+  accounts_type: personal
