@@ -1,6 +1,7 @@
 ---
 development:
   DB_FILENAME: db/dev.db
+  DB_KEY: 'uo+NjFvxXgFjoScigLKl132LWO0R6/nHvglkzxkjA10='
 
 test:
   DB_FILENAME: db/test.db

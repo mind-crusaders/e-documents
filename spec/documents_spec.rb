@@ -46,21 +46,31 @@ describe 'Test Document Handling' do
     _(last_response.status).must_equal 404
   end
 
-  it 'HAPPY: should be able to create new documents' do
-    proj = EDocuments::Project.first
-    doc_data = DATA[:documents][1]
+  describe 'Creating Documents' do
+    before do
+      @proj = EDocuments::Project.first
+      @doc_data = DATA[:documents][1]
+      @req_header = { 'CONTENT_TYPE' => 'application/json' }
+    end
 
-    req_header = { 'CONTENT_TYPE' => 'application/json' }
-    post "api/v1/projects/#{proj.id}/documents",
-         doc_data.to_json, req_header
-    _(last_response.status).must_equal 201
-    _(last_response.header['Location'].size).must_be :>, 0
-
-    created = JSON.parse(last_response.body)['data']['data']['attributes']
-    doc = EDocuments::Document.first
-
-    _(created['id']).must_equal doc.id
-    _(created['filename']).must_equal doc_data['filename']
-    _(created['description']).must_equal doc_data['description']
+    it 'HAPPY: should be able to create new documents' do
+      proj = EDocuments::Project.first
+      doc_data = DATA[:documents][1]
+  
+      req_header = { 'CONTENT_TYPE' => 'application/json' }
+      post "api/v1/projects/#{proj.id}/documents",
+           doc_data.to_json, req_header
+      _(last_response.status).must_equal 201
+      _(last_response.header['Location'].size).must_be :>, 0
+  
+      created = JSON.parse(last_response.body)['data']['data']['attributes']
+      doc = EDocuments::Document.first
+  
+      _(created['id']).must_equal doc.id
+      _(created['filename']).must_equal doc_data['filename']
+      _(created['description']).must_equal doc_data['description']
+      _(created['permission']).must_equal doc_data['permission']
+    
+    end
   end
 end

@@ -7,11 +7,11 @@ Sequel.migration do
     create_table(:users) do
       primary_key :id
 
-      String :name, null: false
-      String :surname, null: false
-      String :username, null: false
-      String :email, null: false
-      Integer :phone, null: false
+      String :name_secure, null: false
+      String :surname_secure, null: false
+      String :username_secure, null: false
+      String :email_secure, null: false
+      Integer :phone_secure, null: false
 
 
       DateTime :created_at
