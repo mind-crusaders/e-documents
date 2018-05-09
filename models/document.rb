@@ -6,7 +6,7 @@ require 'sequel'
 module EDocuments
   # Models a secret document
   class Document < Sequel::Model
-    many_to_one :user
+    many_to_one :accounts
 
     plugin :uuid, field: :id
     plugin :timestamps
@@ -45,7 +45,7 @@ module EDocuments
             }
           },
           included: {
-            user: user
+            account: account
           }
         }, options
       )
