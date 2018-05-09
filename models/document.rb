@@ -8,6 +8,28 @@ module EDocuments
   class Document < Sequel::Model
     many_to_one :user
 
+    plugin :uuid, field: :id
+    plugin :timestamps
+    plugin :whitelist_security
+    #We allow users to set everything but permission
+    set_allowed_columns :filename, :relative_path, :description
+
+    def description
+      SecureDB.decrypt(self.description_secure)
+    end
+
+    def description=(plaintext)
+      self.description_secure = SecureDB.encrypt(plaintext)
+    end
+
+    def content
+      SecureDB.decrypt(self.content_secure)
+    end
+
+    def content=(plaintext)
+      self.content_secure = SecureDB.encrypt(plaintext)
+    end
+
     # rubocop:disable MethodLength
     def to_json(options = {})
       JSON(

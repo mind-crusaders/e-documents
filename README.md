@@ -43,3 +43,10 @@ Run this API using:
 ```shell
 rackup
 ```
+
+## Logo
+
+<p align="center">
+  <<a href="https://ibb.co/keXa1x"><img src="https://preview.ibb.co/mLq68c/Logo.png" alt="Logo" border="0"></a>
+  
+</p>
