@@ -13,7 +13,7 @@ Sequel.migration do
       String :relative_path, null: false, default: ''
       String :description_secure
       String :permission_secure, null: false
-
+      String :content_secure, null: false, default: ''
       
       DateTime :created_at
       DateTime :updated_at

@@ -9,8 +9,8 @@ Sequel.migration do
 
       String :name_secure, null: false
       String :surname_secure, null: false
-      String :username_secure, null: false
-      String :email_secure, null: false
+      String :username_secure, null: false, unique: true 
+      String :email_secure, null: false, unique: true 
       Integer :phone_secure, null: false
       String :password_hash
       String :salt
