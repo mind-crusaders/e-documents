@@ -6,3 +6,10 @@
   phone: +26876124637
   password: mypassword
   accounts_type: personal
+- name: Abdoul
+  surname: traore
+  username: abdoul.traore
+  email: abdoul@gmail.com
+  phone: 0886901300826
+  password: mypassword
+  accounts_type: personal
