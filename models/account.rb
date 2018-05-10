@@ -4,8 +4,8 @@ require 'json'
 require 'sequel'
 
 module EDocuments
-  # Models a user
-  class User < Sequel::Model
+  # Models an account
+  class Account < Sequel::Model
     one_to_many :documents
     plugin :association_dependencies, documents: :destroy
     plugin :timestamps
@@ -17,7 +17,7 @@ module EDocuments
       JSON(
         {
           data: {
-            type: 'user',
+            type: 'account',
             attributes: {
               id: id,
               name: name,
