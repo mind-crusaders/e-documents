@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Edocs
+module Edocuments
   # Create new configuration for an account
   class CreateDocumentForAccount
     def self.call(account_id:, document_data:)
