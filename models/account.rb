@@ -1,24 +1,24 @@
 require 'sequel'
 require 'json'
 
-module Credence
+module Edocument
   # Models a registered account
   class Account < Sequel::Model
-    one_to_many :owned_projects, class: :'Credence::Project', key: :owner_id
-    plugin :association_dependencies, owned_projects: :destroy
+    one_to_many :owned_documents, class: :'Edocument::Document', key: :owner_id
+    plugin :association_dependencies, owned_documents: :destroy
 
-    many_to_many :collaborations,
-                 class: :'Credence::Project',
-                 join_table: :accounts_projects,
-                 left_key: :collaborator_id, right_key: :project_id
+    many_to_many :views,
+                 class: :'Edocument::Document',
+                 join_table: :accounts_documents,
+                 left_key: :viewer_id, right_key: :document_id
 
     plugin :whitelist_security
-    set_allowed_columns :username, :email, :password
+    set_allowed_columns :username, :email, :password, :lastname, :firstname
 
     plugin :timestamps, update_on_create: true
 
-    def projects
-      owned_projects + collaborations
+    def documents
+      owned_documents + views
     end
 
     def password=(new_password)
@@ -37,7 +37,9 @@ module Credence
           type: 'account',
           id: id,
           username: username,
-          email: email
+          email: email,
+          lastname: lastname,
+          firstname: firstname
         }, options
       )
     end

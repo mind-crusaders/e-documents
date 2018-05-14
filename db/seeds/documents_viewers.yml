@@ -1,0 +1,8 @@
+---
+  - doc_name: Data Document
+    viewer_email:
+      - furen@nthu.edu.tw
+      - galit@gmail.com
+  - doc_name: Config Document
+    viewer_email:
+      - galit@gmail.com

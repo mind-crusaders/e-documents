@@ -3,7 +3,7 @@
 require 'roda'
 require 'econfig'
 
-module Credence
+module Edocument
   # Configuration for the API
   class Api < Roda
     plugin :environments

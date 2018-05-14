@@ -32,7 +32,7 @@ end
 namespace :db do
   require_relative 'lib/init' # load libraries
   require_relative 'config/init' # load config info
-  app = Credence::Api
+  app = Edocument::Api
 
   task :setup do
     require 'sequel'
@@ -66,7 +66,7 @@ namespace :db do
 
   task :reset_seeds => [:setup, :load_models] do
     app.DB[:schema_seeds].delete if app.DB.tables.include?(:schema_seeds)
-    Credence::Account.dataset.destroy
+    Edocument::Account.dataset.destroy
   end
 
   desc 'Seeds the development database'

@@ -2,59 +2,62 @@
 
 Sequel.seed(:development) do
   def run
-    puts 'Seeding accounts, projects, documents'
+    puts 'Seeding accounts, documents'
     create_accounts
-    create_owned_projects
+    create_owned_documents
     create_documents
-    add_collaborators
+    add_viewers
   end
 end
 
 require 'yaml'
 DIR = File.dirname(__FILE__)
 ACCOUNTS_INFO = YAML.load_file("#{DIR}/accounts_seed.yml")
-OWNER_INFO = YAML.load_file("#{DIR}/owners_projects.yml")
-PROJ_INFO = YAML.load_file("#{DIR}/projects_seed.yml")
+OWNER_INFO = YAML.load_file("#{DIR}/owners_documents.yml")
 DOCUMENT_INFO = YAML.load_file("#{DIR}/documents_seed.yml")
-CONTRIB_INFO = YAML.load_file("#{DIR}/projects_collaborators.yml")
+#DOCUMENT_INFO = YAML.load_file("#{DIR}/documents_seed.yml")
+VIEW_INFO = YAML.load_file("#{DIR}/documents_viewers.yml")
 
 def create_accounts
   ACCOUNTS_INFO.each do |account_info|
-    Credence::Account.create(account_info)
+    Edocument::Account.create(account_info)
   end
 end
 
-def create_owned_projects
+def create_owned_documents
   OWNER_INFO.each do |owner|
-    account = Credence::Account.first(username: owner['username'])
-    owner['proj_name'].each do |proj_name|
-      proj_data = PROJ_INFO.find { |proj| proj['name'] == proj_name }
-      Credence::CreateProjectForOwner.call(
-        owner_id: account.id, project_data: proj_data
+    account = Edocument::Account.first(username: owner['username'])
+    owner['doc_name'].each do |doc_name|
+      doc_data = DOC_INFO.find { |doc| doc['name'] == doc_name }
+      Edocument::CreateDocumentForOwner.call(
+        owner_id: account.id, document_data: doc_data
       )
     end
   end
 end
-
+=begin
 def create_documents
   doc_info_each = DOCUMENT_INFO.each
-  projects_cycle = Credence::Project.all.cycle
+  accounts_cycle = Edocument::Account.all.cycle
   loop do
     doc_info = doc_info_each.next
-    project = projects_cycle.next
-    Credence::CreateDocumentForProject.call(
-      project_id: project.id, document_data: doc_info
+    account = accounts_cycle.next
+    Edocument::CreateDocumentForAccount.call(
+      account_id: account.id, document_data: doc_info
     )
   end
 end
+=end 
 
-def add_collaborators
-  contrib_info = CONTRIB_INFO
-  contrib_info.each do |contrib|
-    proj = Credence::Project.first(name: contrib['proj_name'])
-    contrib['collaborator_email'].each do |email|
-      collaborator = Credence::Account.first(email: email)
-      proj.add_collaborator(collaborator)
+
+
+def add_viewers
+  view_info = VIEW_INFO
+  view_info.each do |view|
+    doc = Edocument::Document.first(name: view['doc_name'])
+    view['viewer_email'].each do |email|
+      viewer = Edocument::Account.first(email: email)
+      doc.add_viewer(viewer)
     end
   end
 end

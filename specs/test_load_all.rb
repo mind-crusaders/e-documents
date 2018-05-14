@@ -7,5 +7,5 @@ include Rack::Test::Methods
 require_relative '../init'
 
 def app
-  Credence::Api
+  Edocument::Api
 end

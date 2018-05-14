@@ -1,34 +1,42 @@
 # frozen_string_literal: true
 
-require 'json'
-require 'sequel'
-
-module Credence
-  # Models a secret document
+module Edocument
+  # Models a project
   class Document < Sequel::Model
-    many_to_one :project
+    many_to_one :owner, class: :'Edocument::Account'
+  
+    many_to_many :viewers,
+                 class: :'Edocument::Account',
+                 join_table: :accounts_documents,
+                 left_key: :document_id, right_key: :viewer_id
+
+    #one_to_many :documents
+    plugin :association_dependencies
+    #add_association_dependencies documents: :destroy, viewers: :nullify
+
+    
 
     plugin :uuid, field: :id
 
     plugin :whitelist_security
-    set_allowed_columns :filename, :relative_path, :description, :content
+    set_allowed_columns :filename, :doctype
 
     plugin :timestamps, update_on_create: true
 
-    def description
-      SecureDB.decrypt(self.description_secure)
+    def filename
+      SecureDB.decrypt(self.filename_secure)
     end
 
-    def description=(plaintext)
-      self.description_secure = SecureDB.encrypt(plaintext)
+    def filename=(plaintext)
+      self.filename_secure = SecureDB.encrypt(plaintext)
     end
 
-    def content
-      SecureDB.decrypt(self.content_secure)
+    def doctype
+      SecureDB.decrypt(self.doctype_secure)
     end
 
-    def content=(plaintext)
-      self.content_secure = SecureDB.encrypt(plaintext)
+    def doctype=(plaintext)
+      self.doctype_secure = SecureDB.encrypt(plaintext)
     end
 
     # rubocop:disable MethodLength
@@ -37,11 +45,9 @@ module Credence
         {
           type: 'document',
           id: id,
-          filename: filename,
-          relative_path: relative_path,
-          description: description,
-          content: content,
-          project: project
+          owner_id: owner_id,
+          filename_secure: filename_secure,
+          doctype_secure: doctype_secure
         }, options
       )
     end
