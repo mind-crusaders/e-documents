@@ -33,6 +33,11 @@ group :development do
   gem 'rubocop'
 end
 
+# Production
+group :production do
+  gem 'pg'
+end 
+
 group :development, :test do
   gem 'rerun'
 end
